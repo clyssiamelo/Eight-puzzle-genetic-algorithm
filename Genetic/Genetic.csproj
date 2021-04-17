@@ -44,7 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>AForge.Genetic.xml</DocumentationFile>
-    <IntermediateOutputPath>C:\Users\Rick\AppData\Local\Temp\vsDEAA.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Matheus\AppData\Local\Temp\vsD051.tmp\Debug\</IntermediateOutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -55,7 +55,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>AForge.Genetic.xml</DocumentationFile>
-    <IntermediateOutputPath>C:\Users\Rick\AppData\Local\Temp\vsDEAA.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Matheus\AppData\Local\Temp\vsD051.tmp\Release\</IntermediateOutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>

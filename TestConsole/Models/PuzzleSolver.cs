@@ -19,7 +19,7 @@ namespace TestConsole.Models
             int numeroDiferencas = CompararNumeroDiferencas(ToArrayBidimensional(estadoInicial), ToArrayBidimensional(estadoObjetivo));
 
             var chromosome = new Chromosome(estadoInicial);
-            var fitnessFuncao = new Fitness();
+            var fitnessFuncao = new Fitness(estadoObjetivo);
             var selecao = new RouletteWheelSelection();
 
             Population population = new Population(10, chromosome, fitnessFuncao, selecao);
