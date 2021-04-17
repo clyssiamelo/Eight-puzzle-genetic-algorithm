@@ -13,7 +13,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>AForge.Genetic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -95,7 +96,6 @@
     <Compile Include="Selection Algorithms\RouletteWheelSelection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AForge.Genetic.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

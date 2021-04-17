@@ -15,9 +15,7 @@ namespace TestConsole.Models
             // Estados
             ushort[] estadoInicial = new ushort[] { 1, 5, 3, 4, 2, 6, 7, 8, 0 };
             ushort[] estadoObjetivo = new ushort[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-            int tamanhoPopulacao = 10;
-
-            //int numeroDiferencas = CompararNumeroDiferencas(ToArrayBidimensional(estadoInicial), ToArrayBidimensional(estadoObjetivo));
+            int tamanhoPopulacao = 100;            
 
             var chromosome = new Chromosome(estadoInicial);
             var fitnessFuncao = new Fitness(estadoObjetivo);
@@ -32,51 +30,33 @@ namespace TestConsole.Models
 
                 var melhorEstado = ((PermutationChromosome)population.BestChromosome).Value;
 
-                if (EhObjetivoFinal(ToArrayBidimensional(melhorEstado), ToArrayBidimensional(estadoObjetivo)))
+                if (EhObjetivoFinal(Utils.ToArrayBidimensional(melhorEstado), Utils.ToArrayBidimensional(estadoObjetivo)))
                 {
+                    Console.WriteLine("Encontrei o estado objetivo...");
+
+                    string resultado = "ESTADO OBJETIVO ENCONTRADO PELO GA --> [ ";
+                    for (int i = 0; i < melhorEstado.Length; i++)
+                    {
+                        resultado += melhorEstado[i] + " ";
+                    }
+
+                    resultado += "]";
+
+                    Console.WriteLine(resultado);
+                    Console.WriteLine($"Número de iterações necessárias = [{contadorNumeroIteracoes}]");
+
                     break;
                 }
 
                 contadorNumeroIteracoes++;
 
                 if (contadorNumeroIteracoes > numeroMaximoIteracoes)
+                {
+                    Console.WriteLine("Com o número máximo de iterações não encontrei o objetivo...");
+
                     break;
-            }
-        }
-
-        private int CompararNumeroDiferencas(ushort[,] estadoInicial, ushort[,] estadoObjetivo)
-        {
-            int contador = 0;
-
-            for (int i = 0; i < estadoInicial.GetLength(0); i++)
-            {
-                for (int j = 0; j < estadoInicial.GetLength(0); j++)
-                {
-                    if (estadoInicial[i, j] != estadoObjetivo[i, j])
-                        contador++;
                 }
             }
-
-            return contador;
-        }
-
-        private ushort[,] ToArrayBidimensional(ushort[] estado)
-        {
-            int totalQuadrados = estado.Length;
-            ushort[,] novoEstado = new ushort[n, n];
-
-            int contador = 0;
-
-            for (int i = 0; i < novoEstado.GetLength(0); i++)
-            {
-                for (int j = 0; j < novoEstado.GetLength(1); j++)
-                {
-                    novoEstado[i, j] = estado[contador];
-                    contador++;
-                }
-            }
-
-            return novoEstado;
         }
 
         private bool EhObjetivoFinal(ushort[,] estado, ushort[,] estadoObjetivo)

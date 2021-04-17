@@ -1,5 +1,6 @@
 ﻿using AForge.Genetic;
 using System;
+using System.Linq;
 
 namespace TestConsole.Models.GA
 {
@@ -49,6 +50,8 @@ namespace TestConsole.Models.GA
                         Movimento.GerarPossibilidadeEsquerda(novoEstado, out novoEstado);
                         break;
                 }
+
+                contadorMovimentos++;
             }
 
             ushort[] novoEstadoGerado = Utils.ToArray(novoEstado);
@@ -58,8 +61,64 @@ namespace TestConsole.Models.GA
 
         public override void Crossover(IChromosome pair)
         {
+            var p = (Chromosome)pair;
 
+            var valorPai = p.val;
+            var valorMae = this.val;
+
+            var filho1 = IniciarArray(valorPai.Length);
+            var filho2 = IniciarArray(valorPai.Length);
+
+            for (int i = 0; i < valorPai.Length; i++)
+            {
+                if (i <= 4)
+                {
+                    filho1[i] = valorMae[i];
+                    filho2[i] = valorPai[i];
+                }
+                else
+                    break;
+            }
+
+            for (int i = 5; i < valorPai.Length; i++)
+            {
+                ushort valorEncontrado = PegarUmValorQueNaoEstejaInserido(valorPai, filho1);
+                filho1[i] = valorEncontrado;
+            }
+
+            for (int i = 5; i < valorMae.Length; i++)
+            {
+                ushort valorEncontrado = PegarUmValorQueNaoEstejaInserido(valorMae, filho2);
+                filho2[i] = valorEncontrado;
+            }
+
+            p.val = filho1;
+            this.val = filho2;
         }
 
+        private ushort PegarUmValorQueNaoEstejaInserido(ushort[] primeiro, ushort[] segundo)
+        {
+            for (int i = 0; i < primeiro.Length; i++)
+            {
+                bool existe = segundo.Any(val => val == primeiro[i]);
+                if (!existe)
+                    return primeiro[i];
+            }
+
+            return 0;
+        }
+
+        private ushort[] IniciarArray(int length)
+        {
+            ushort[] arr = new ushort[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                arr[i] = ushort.MaxValue;
+            }
+
+            return arr;
+        }
     }
+
 }
