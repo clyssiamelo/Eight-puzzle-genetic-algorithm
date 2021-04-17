@@ -1,0 +1,170 @@
+﻿@page "/eightpuzzle"
+
+<h1>8 Puzzle</h1>
+
+<hr />
+
+<div class="row">
+
+    <div class="col-md-12" style="display: @(MostrarMensagem ? "block" : "none")">
+        <div class="alert alert-danger mt-2" role="alert">
+            @Mensagem
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header"><b>ESTADO INICIAL</b></div>
+            <div class="card-body">
+                <div class="grid @(Dimensao == 4 ? "w-h-400" : "w-h-300")">
+                    @if (Dimensao == 3)
+                    {
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres00Inicial" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres01Inicial" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres02Inicial" />
+
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres10Inicial" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres11Inicial" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres12Inicial" />
+
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres20Inicial" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres21Inicial" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres22Inicial" />
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header"><b>ESTADO FINAL</b></div>
+            <div class="card-body">
+                <div class="grid @(Dimensao == 4 ? "w-h-400" : "w-h-300")">
+
+                    @if (Dimensao == 3)
+                    {
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres00Final" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres01Final" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres02Final" />
+
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres10Final" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres11Final" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres12Final" />
+
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres20Final" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres21Final" />
+                        <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres22Final" />
+                    }
+
+                   
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 mt-2">
+        <div class="card">
+            <div class="card-header"><b>CONFIGURAÇÕES</b></div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label for="exampleFormControlInput1" class="form-label">Dimensão</label>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="form-checked" id="3por3" @bind="Dimensao" checked="@(DimensaoSelecionada == 1)" @onclick="AlterarPara3por3">
+                                    <label class="form-check-label" for="3por3">
+                                        3 x 3
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Número máximo de iterações</label>
+                            <input min="0" max="@int.MaxValue" type="number" class="form-control" @bind="NumeroMaximoIteracoes">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Tamanho da População</label>
+                            <input min="0" max="@int.MaxValue" type="number" class="form-control" @bind="TamanhoPopulacao">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Chance de Crossover</label>
+                            <input min="0" max="@int.MaxValue" type="number" class="form-control" @bind="ChanceCrossover">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Chance de Mutação</label>
+                            <input min="0" max="@int.MaxValue" type="number" class="form-control" @bind="ChanceMutacao">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-12 text-right mt-2">
+        <button type="button" @onclick="Resolver" class="btn btn-primary">Resolver</button>
+    </div>
+
+</div>
+
+@if (NosMarkupStr.Any())
+{
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <b>RESULTADOS</b>
+                </div>
+                <div class="card-body">
+
+                    @if (EncontrouSolucao)
+                    {
+                        <div class="alert alert-success mt-2" role="alert">
+                            Uma solução foi encontrada!! =D
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger mt-2" role="alert">
+                            Não foi encontrada uma solução com os parâmetros informados
+                        </div>
+                    }
+
+                    @foreach (MarkupString no in NosMarkupStr)
+                    {
+                        @no
+
+                        <br />
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
