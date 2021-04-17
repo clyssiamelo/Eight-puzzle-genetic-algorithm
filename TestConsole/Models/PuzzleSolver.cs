@@ -15,14 +15,15 @@ namespace TestConsole.Models
             // Estados
             ushort[] estadoInicial = new ushort[] { 1, 5, 3, 4, 2, 6, 7, 8, 0 };
             ushort[] estadoObjetivo = new ushort[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 0 };
+            int tamanhoPopulacao = 10;
 
-            int numeroDiferencas = CompararNumeroDiferencas(ToArrayBidimensional(estadoInicial), ToArrayBidimensional(estadoObjetivo));
+            //int numeroDiferencas = CompararNumeroDiferencas(ToArrayBidimensional(estadoInicial), ToArrayBidimensional(estadoObjetivo));
 
             var chromosome = new Chromosome(estadoInicial);
             var fitnessFuncao = new Fitness(estadoObjetivo);
             var selecao = new RouletteWheelSelection();
 
-            Population population = new Population(10, chromosome, fitnessFuncao, selecao);
+            Population population = new Population(tamanhoPopulacao, chromosome, fitnessFuncao, selecao);
 
             int contadorNumeroIteracoes = 0;
             while (true)
@@ -33,7 +34,7 @@ namespace TestConsole.Models
 
                 if (EhObjetivoFinal(ToArrayBidimensional(melhorEstado), ToArrayBidimensional(estadoObjetivo)))
                 {
-                    throw new Exception("cheguei ao objetivo");
+                    break;
                 }
 
                 contadorNumeroIteracoes++;
