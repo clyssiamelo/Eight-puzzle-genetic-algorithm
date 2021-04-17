@@ -1,13 +1,13 @@
 ﻿using AForge.Genetic;
 using System;
 
-namespace EightPuzzleGeneticAlgorithm.Models.GA
+namespace TestConsole.Models.GA
 {
     public class Fitness : IFitnessFunction
     {
         public double Evaluate(IChromosome chromosome)
         {
-            return 0;
+            return new Random().Next(20);
         }
     }
 }

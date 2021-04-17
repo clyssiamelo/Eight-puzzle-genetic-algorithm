@@ -1,8 +1,8 @@
 ﻿using AForge.Genetic;
-using EightPuzzleGeneticAlgorithm.Models.GA;
+using TestConsole.Models.GA;
 using System;
 
-namespace EightPuzzleGeneticAlgorithm.Models
+namespace TestConsole.Models
 {
     public class PuzzleSolver
     {
@@ -18,11 +18,11 @@ namespace EightPuzzleGeneticAlgorithm.Models
 
             int numeroDiferencas = CompararNumeroDiferencas(ToArrayBidimensional(estadoInicial), ToArrayBidimensional(estadoObjetivo));
 
-            var chromosome = new Chromosome(n * n, estadoInicial);
+            var chromosome = new Chromosome(estadoInicial);
             var fitnessFuncao = new Fitness();
             var selecao = new RouletteWheelSelection();
 
-            Population population = new Population(2, chromosome, fitnessFuncao, selecao);
+            Population population = new Population(10, chromosome, fitnessFuncao, selecao);
 
             int contadorNumeroIteracoes = 0;
             while (true)
@@ -39,7 +39,7 @@ namespace EightPuzzleGeneticAlgorithm.Models
                 contadorNumeroIteracoes++;
 
                 if (contadorNumeroIteracoes > numeroMaximoIteracoes)
-                    break;                
+                    break;
             }
         }
 
@@ -85,7 +85,7 @@ namespace EightPuzzleGeneticAlgorithm.Models
                 for (int j = 0; j < estado.GetLength(1); j++)
                 {
                     if (estado[i, j] != estadoObjetivo[i, j])
-                            return false;
+                        return false;
                 }
             }
 
