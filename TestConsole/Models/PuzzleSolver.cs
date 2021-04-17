@@ -6,7 +6,7 @@ namespace TestConsole.Models
 {
     public class PuzzleSolver
     {
-        public int n { get; set; } = 3;
+        public int N { get; set; } = 3;
 
         public void Resolver()
         {

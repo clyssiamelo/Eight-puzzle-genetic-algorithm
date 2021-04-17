@@ -6,7 +6,7 @@ namespace EightPuzzleGeneticAlgorithm.Models
 {
     public class PuzzleSolver
     {
-        public int n { get; set; } = 3;
+        public int N { get; set; } = 3;
 
         public void Resolver()
         {
@@ -15,14 +15,13 @@ namespace EightPuzzleGeneticAlgorithm.Models
             // Estados
             ushort[] estadoInicial = new ushort[] { 1, 5, 3, 4, 2, 6, 7, 8, 0 };
             ushort[] estadoObjetivo = new ushort[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 0 };
+            int tamanhoPopulacao = 100;            
 
-            int numeroDiferencas = CompararNumeroDiferencas(ToArrayBidimensional(estadoInicial), ToArrayBidimensional(estadoObjetivo));
-
-            var chromosome = new Chromosome(n * n, estadoInicial);
-            var fitnessFuncao = new Fitness();
+            var chromosome = new Chromosome(estadoInicial);
+            var fitnessFuncao = new Fitness(estadoObjetivo);
             var selecao = new RouletteWheelSelection();
 
-            Population population = new Population(2, chromosome, fitnessFuncao, selecao);
+            Population population = new Population(tamanhoPopulacao, chromosome, fitnessFuncao, selecao);
 
             int contadorNumeroIteracoes = 0;
             while (true)
@@ -31,51 +30,33 @@ namespace EightPuzzleGeneticAlgorithm.Models
 
                 var melhorEstado = ((PermutationChromosome)population.BestChromosome).Value;
 
-                if (EhObjetivoFinal(ToArrayBidimensional(melhorEstado), ToArrayBidimensional(estadoObjetivo)))
+                if (EhObjetivoFinal(Utils.ToArrayBidimensional(melhorEstado), Utils.ToArrayBidimensional(estadoObjetivo)))
                 {
-                    throw new Exception("cheguei ao objetivo");
+                    Console.WriteLine("Encontrei o estado objetivo...");
+
+                    string resultado = "ESTADO OBJETIVO ENCONTRADO PELO GA --> [ ";
+                    for (int i = 0; i < melhorEstado.Length; i++)
+                    {
+                        resultado += melhorEstado[i] + " ";
+                    }
+
+                    resultado += "]";
+
+                    Console.WriteLine(resultado);
+                    Console.WriteLine($"Número de iterações necessárias = [{contadorNumeroIteracoes}]");
+
+                    break;
                 }
 
                 contadorNumeroIteracoes++;
 
                 if (contadorNumeroIteracoes > numeroMaximoIteracoes)
-                    break;                
-            }
-        }
-
-        private int CompararNumeroDiferencas(ushort[,] estadoInicial, ushort[,] estadoObjetivo)
-        {
-            int contador = 0;
-
-            for (int i = 0; i < estadoInicial.GetLength(0); i++)
-            {
-                for (int j = 0; j < estadoInicial.GetLength(0); j++)
                 {
-                    if (estadoInicial[i, j] != estadoObjetivo[i, j])
-                        contador++;
+                    Console.WriteLine("Com o número máximo de iterações não encontrei o objetivo...");
+
+                    break;
                 }
             }
-
-            return contador;
-        }
-
-        private ushort[,] ToArrayBidimensional(ushort[] estado)
-        {
-            int totalQuadrados = estado.Length;
-            ushort[,] novoEstado = new ushort[n, n];
-
-            int contador = 0;
-
-            for (int i = 0; i < novoEstado.GetLength(0); i++)
-            {
-                for (int j = 0; j < novoEstado.GetLength(1); j++)
-                {
-                    novoEstado[i, j] = estado[contador];
-                    contador++;
-                }
-            }
-
-            return novoEstado;
         }
 
         private bool EhObjetivoFinal(ushort[,] estado, ushort[,] estadoObjetivo)
@@ -85,7 +66,7 @@ namespace EightPuzzleGeneticAlgorithm.Models
                 for (int j = 0; j < estado.GetLength(1); j++)
                 {
                     if (estado[i, j] != estadoObjetivo[i, j])
-                            return false;
+                        return false;
                 }
             }
 
