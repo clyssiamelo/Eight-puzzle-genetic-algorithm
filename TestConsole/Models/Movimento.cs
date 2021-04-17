@@ -1,10 +1,11 @@
 ﻿namespace TestConsole.Models
 {
-    public static class Movimentos
+    public static class Movimento
     {
 
-        public static bool GerarPossibilidadeCima(ushort[,] estado, Posicao espacoVazio, out ushort[,] estadoGerado)
+        public static bool GerarPossibilidadeCima(ushort[,] estado, out ushort[,] estadoGerado)
         {
+            Posicao espacoVazio = EncontrarEspacoVazio(estado);
             Posicao paraCima = new Posicao(espacoVazio.Linha - 1, espacoVazio.Coluna);
             if (PosicaoValida(paraCima, estado.GetLength(0)))
             {
@@ -24,8 +25,9 @@
             return false;
         }
 
-        public static bool GerarPossibilidadeDireita(ushort[,] estado, Posicao espacoVazio, out ushort[,] estadoGerado)
+        public static bool GerarPossibilidadeDireita(ushort[,] estado, out ushort[,] estadoGerado)
         {
+            Posicao espacoVazio = EncontrarEspacoVazio(estado);
             Posicao paraCima = new Posicao(espacoVazio.Linha, espacoVazio.Coluna + 1);
             if (PosicaoValida(paraCima, estado.GetLength(0)))
             {
@@ -45,8 +47,9 @@
             return false;
         }
 
-        public static bool GerarPossibilidadeBaixo(ushort[,] estado, Posicao espacoVazio, out ushort[,] estadoGerado)
+        public static bool GerarPossibilidadeBaixo(ushort[,] estado, out ushort[,] estadoGerado)
         {
+            Posicao espacoVazio = EncontrarEspacoVazio(estado);
             Posicao paraCima = new Posicao(espacoVazio.Linha + 1, espacoVazio.Coluna);
             if (PosicaoValida(paraCima, estado.GetLength(0)))
             {
@@ -66,8 +69,9 @@
             return false;
         }
 
-        public static bool GerarPossibilidadeEsquerda(ushort[,] estado, Posicao espacoVazio, out ushort[,] estadoGerado)
+        public static bool GerarPossibilidadeEsquerda(ushort[,] estado, out ushort[,] estadoGerado)
         {
+            Posicao espacoVazio = EncontrarEspacoVazio(estado);
             Posicao paraCima = new Posicao(espacoVazio.Linha, espacoVazio.Coluna - 1);
             if (PosicaoValida(paraCima, estado.GetLength(0)))
             {
@@ -84,6 +88,32 @@
             }
 
             estadoGerado = estado;
+            return false;
+        }
+
+        public static bool MovimentoEhPossivel(int movimento, ushort [,] estado)
+        {
+            Posicao espacoVazio = EncontrarEspacoVazio(estado);
+
+            Posicao movimentoAux;
+            switch (movimento)
+            {
+                case 0: // Mover para cima
+                    movimentoAux = new Posicao(espacoVazio.Linha - 1, espacoVazio.Coluna);
+                   return PosicaoValida(movimentoAux, estado.GetLength(0));   
+                    
+                case 1: // Mover para direita
+                    movimentoAux = new Posicao(espacoVazio.Linha, espacoVazio.Coluna + 1);
+                    return PosicaoValida(movimentoAux, estado.GetLength(0));
+                    
+                case 2: // Mover para baixo
+                    movimentoAux = new Posicao(espacoVazio.Linha + 1, espacoVazio.Coluna);
+                    return PosicaoValida(movimentoAux, estado.GetLength(0));
+                    
+                case 3: // Mover para esquerda
+                    movimentoAux = new Posicao(espacoVazio.Linha, espacoVazio.Coluna - 1);
+                    return PosicaoValida(movimentoAux, estado.GetLength(0));
+            }
             return false;
         }
 
