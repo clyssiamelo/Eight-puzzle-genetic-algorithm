@@ -1,24 +1,24 @@
 ﻿using EightPuzzleGeneticAlgorithm.Models;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EightPuzzleGeneticAlgorithm.Pages
 {
     public partial class EightPuzzle
     {
-        private List<MarkupString> NosMarkupStr = new List<MarkupString>();
-        public int TamanhoPopulacao { get; set; } = 10;
+        private readonly List<MarkupString> NosMarkupStr = new List<MarkupString>();
+
         private int? NumeroMaximoIteracoes { get; set; } = 1000;
-        public double ChanceCrossover { get; set; } = 0.75;
-        public double ChanceMutacao { get; set; } = 0.1;
+
         private void AlterarPara3por3() => Dimensao = 3;
 
-        private bool EncontrouSolucao { get; set; }
+        public int TamanhoPopulacao { get; set; } = 10;
 
-        private bool GerandoSolucao { get; set; }
+        public double ChanceCrossover { get; set; } = 0.75;
+
+        public double ChanceMutacao { get; set; } = 0.1;
+
+        private bool EncontrouSolucao { get; set; }
 
         public int Dimensao { get; set; } = 3;
 
@@ -80,7 +80,6 @@ namespace EightPuzzleGeneticAlgorithm.Pages
 
         #endregion
 
-
         public void Resolver()
         {
             NosMarkupStr.Clear();
@@ -111,37 +110,24 @@ namespace EightPuzzleGeneticAlgorithm.Pages
                 return;
             }
 
-            //bool ehResolvivel = new VerificaParidade().IsSolvable(EstadoInicial, EstadoFinal);
-
-            //if (!ehResolvivel)
-            //{
-            //    MostrarMensagemErro("O conjunto de estados informados não é resolvível");
-            //    return;
-            //}
-            //else
-            //{
-            //    EsconderMensagem();
-            //}
-
             bool encontrouSolucao = false;
-
-            GerandoSolucao = true;
 
             // No ultimoNoConhecido = new _8Puzzle.Models.Solver(EstadoInicial, EstadoFinal, numeroIteracoes).Solve(out encontrouSolucao);
             int numeroiteracoes;
             ushort[] estadoEncontrado;
 
-            encontrouSolucao = new PuzzleSolver().Resolver(NumeroMaximoIteracoes.Value, EstadoInicial, EstadoFinal, TamanhoPopulacao, ChanceCrossover, ChanceMutacao, out numeroiteracoes, out estadoEncontrado);
+            encontrouSolucao = new PuzzleSolver().Resolver(numeroMaximoIteracoes, EstadoInicial, EstadoFinal, TamanhoPopulacao, ChanceCrossover, ChanceMutacao, out numeroiteracoes, out estadoEncontrado);
 
-            if (encontrouSolucao == true)
+            if (encontrouSolucao)
             {
                 EncontrouSolucao = encontrouSolucao;
                 PrintarArray(estadoEncontrado, numeroiteracoes);
                 EsconderMensagem();
             }
-
-            //TODO: Verificar se os estado são possíveis, também verificar se não existe valor repetido
-            //TODO: Arrumar view para carregar os valores
+            else
+            {
+                MostrarMensagemErro("Para os estados e configurações informadas não foi chego ao estado final");
+            }
         }
 
         private void PrintarArray(ushort[] estado, int numeroIteracoes)
@@ -155,6 +141,7 @@ namespace EightPuzzleGeneticAlgorithm.Pages
             resultado += "</div>";
             resultado += $"<div class='row mt-3'>";
             resultado += $"<div class='col-md-2'>";
+            resultado += "<label>Resultado final encontrado</label>";
             resultado += $"<div class='grid-resultado w-h-180'>";
 
 
@@ -182,13 +169,32 @@ namespace EightPuzzleGeneticAlgorithm.Pages
                 if (ehEstadoInicial)
                 {
                     EstadoInicial = new ushort[]
-{ tres00Inicial, tres01Inicial, tres02Inicial, tres10Inicial, tres11Inicial, tres12Inicial, tres20Inicial, tres21Inicial, tres22Inicial};
+                    {
+                        tres00Inicial,
+                        tres01Inicial,
+                        tres02Inicial,
+                        tres10Inicial,
+                        tres11Inicial,
+                        tres12Inicial,
+                        tres20Inicial,
+                        tres21Inicial,
+                        tres22Inicial
+                    };
                 }
                 else
                 {
                     EstadoFinal = new ushort[]
-
-{ tres00Final, tres01Final, tres02Final, tres10Final, tres11Final, tres12Final, tres20Final, tres21Final, tres22Final};
+                    {
+                        tres00Final,
+                        tres01Final,
+                        tres02Final,
+                        tres10Final,
+                        tres11Final,
+                        tres12Final,
+                        tres20Final,
+                        tres21Final,
+                        tres22Final
+                    };
                 }
                 return;
             }
