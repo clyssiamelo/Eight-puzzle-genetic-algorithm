@@ -18,7 +18,7 @@ namespace EightPuzzleGeneticAlgorithm.Pages
 
         public double ChanceMutacao { get; set; } = 0.1;
 
-        private bool EncontrouSolucao { get; set; }
+        private bool? EncontrouSolucao { get; set; }
 
         public int Dimensao { get; set; } = 3;
 
@@ -125,9 +125,7 @@ namespace EightPuzzleGeneticAlgorithm.Pages
                 EsconderMensagem();
             }
             else
-            {
-                MostrarMensagemErro("Para os estados e configurações informadas não foi chego ao estado final");
-            }
+                EncontrouSolucao = false;
         }
 
         private void PrintarArray(ushort[] estado, int numeroIteracoes)
@@ -160,7 +158,6 @@ namespace EightPuzzleGeneticAlgorithm.Pages
 
             resultado = "";
         }
-
 
         private void PegarValoresFormulario(bool ehEstadoInicial)
         {
@@ -199,6 +196,7 @@ namespace EightPuzzleGeneticAlgorithm.Pages
                 return;
             }
         }
+
         private void EsconderMensagem() => MostrarMensagem = false;
 
         private void MostrarMensagemErro(string mensagem)

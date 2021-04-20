@@ -33,7 +33,6 @@
                         <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres21Inicial" />
                         <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres22Inicial" />
                     }
-
                 </div>
             </div>
         </div>
@@ -133,21 +132,29 @@
 
 </div>
 
-@if (NosMarkupStr.Any())
+
+
+@if (EncontrouSolucao.HasValue)
 {
-    <div class="row mt-2">
+    <div class="row mt-2 mb-3">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <b>RESULTADOS</b>
+                    <b>RESULTADO</b>
                 </div>
                 <div class="card-body">
-
-                    @if (EncontrouSolucao)
+                    @if (EncontrouSolucao.Value)
                     {
                         <div class="alert alert-success mt-2" role="alert">
                             Uma solução foi encontrada!! =D
                         </div>
+
+                        @foreach (MarkupString no in NosMarkupStr)
+                        {
+                            @no
+
+                            <br />
+                        }
                     }
                     else
                     {
@@ -155,14 +162,6 @@
                             Não foi encontrada uma solução com os parâmetros informados
                         </div>
                     }
-
-                    @foreach (MarkupString no in NosMarkupStr)
-                    {
-                        @no
-
-                        <br />
-                    }
-
                 </div>
             </div>
         </div>
