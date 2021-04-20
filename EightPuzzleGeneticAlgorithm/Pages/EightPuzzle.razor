@@ -45,7 +45,6 @@
             <div class="card-header"><b>ESTADO FINAL</b></div>
             <div class="card-body">
                 <div class="grid @(Dimensao == 4 ? "w-h-400" : "w-h-300")">
-
                     @if (Dimensao == 3)
                     {
                         <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres00Final" />
@@ -60,9 +59,6 @@
                         <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres21Final" />
                         <input type="number" min="0" max="8" class="input-w-h-100 text-center" @bind="tres22Final" />
                     }
-
-
-
                 </div>
             </div>
         </div>
@@ -95,6 +91,7 @@
                             <input min="0" max="@int.MaxValue" type="number" class="form-control" @bind="NumeroMaximoIteracoes">
                         </div>
                     </div>
+
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Tamanho da População</label>
@@ -112,6 +109,7 @@
                             <input min="0" max="@int.MaxValue" type="number" class="form-control" @bind="ChanceCrossover">
                         </div>
                     </div>
+
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Chance de Mutação</label>
@@ -132,39 +130,4 @@
 
 </div>
 
-
-
-@if (EncontrouSolucao.HasValue)
-{
-    <div class="row mt-2 mb-3">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <b>RESULTADO</b>
-                </div>
-                <div class="card-body">
-                    @if (EncontrouSolucao.Value)
-                    {
-                        <div class="alert alert-success mt-2" role="alert">
-                            Uma solução foi encontrada!! =D
-                        </div>
-
-                        @foreach (MarkupString no in NosMarkupStr)
-                        {
-                            @no
-
-                            <br />
-                        }
-                    }
-                    else
-                    {
-                        <div class="alert alert-danger mt-2" role="alert">
-                            Não foi encontrada uma solução com os parâmetros informados
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
+<ExibirResultado Resultado="NosMarkupStr" MostrarResultado="EncontrouSolucao" />
